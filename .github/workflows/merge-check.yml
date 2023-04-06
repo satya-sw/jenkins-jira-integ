@@ -26,5 +26,6 @@ jobs:
           fi
         id: check-merge
       - name: Set output variable
-        run: echo "Merge needed: ${{ steps.check-merge.outputs.merge_needed }}"
+        run: echo "Merge needed"
+
         if: steps.check-merge.outputs.merge_needed == 'true'
