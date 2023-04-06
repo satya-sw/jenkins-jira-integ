@@ -1,0 +1,30 @@
+name: Merge Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  merge-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Merge base branch into head branch
+        run: |
+          git config user.name "satya-sw"
+          git config user.email "satya@vivilextech.com"
+          git merge origin/main --no-commit --no-ff
+        continue-on-error: true
+      - name: Check if merge is necessary
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "::set-output name=merge_needed::false"
+          else
+            echo "::set-output name=merge_needed::true"
+          fi
+        id: check-merge
+      - name: Set output variable
+        run: echo "Merge needed: ${{ steps.check-merge.outputs.merge_needed }}"
+        if: steps.check-merge.outputs.merge_needed == 'true'
