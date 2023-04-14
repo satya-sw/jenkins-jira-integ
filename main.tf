@@ -41,5 +41,8 @@ output "cluster_endpoint" {
 output "iam_role_arn" {
   value = module.iam.iam_role_arn
 }
+  
+  https://github.com/satya-sw/jenkins-jira-integ/edit/dev-123/main.tf
+  
 
   # webhook test
